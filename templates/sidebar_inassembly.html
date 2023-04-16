@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}" />
+    <script src="{{ url_for('static', filename='js/sidebar.js') }}"></script>
+    {% block header %}
+    {% endblock %}
+</head>
+
+<body>
+    <!-- header -->
+    <div class="header">
+        <h1>Attendants Schedulify</h1>
+        <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
+        <label for="openSidebarMenu" class="sidebarIconToggle">
+            <div class="spinner diagonal part-1"></div>
+            <div class="spinner horizontal"></div>
+            <div class="spinner diagonal part-2"></div>
+        </label>
+    </div>
+  
+    <!-- Side bar -->
+    <div id="sidebarMenu">
+        <ul class="sidebarMenuInner">
+        <li>
+            FirstName LastName 
+            <span>Role</span>
+        </li>
+        <li class="item">
+            <a href="">
+                <i class="material-icons-outlined">home</i>
+                Home
+            </a>
+        </li>
+        <li class="item">
+            <a href="">
+                <i class="material-icons-outlined">contact_page</i>
+                Contact Information
+            </a>
+        </li>
+        <li class="item">
+            <a href="">
+                <i class="material-icons-outlined">schedule</i>
+                Schedule
+            </a>
+        </li>
+        <li class="item">
+            <a href="">
+                <i class="material-icons-outlined">map</i>
+                Map
+            </a>
+        </li>
+        <li class="item">
+            <a href="">
+                <i class="material-icons-outlined">check_in_out</i>
+                Check Out/In Lanyards
+            </a>
+        </li>
+        <li class="item">
+            <a href="">
+                <i class="material-icons-outlined">account_circle</i>
+                Account Details
+            </a>
+        </li>
+        <li class="item">
+            <a href="">
+                <i class="material-icons-outlined">logout</i>
+                Logout
+            </a>
+        </li>
+        </ul>
+    </div>
+
+  <div id='center' class="main center">
+    {% block content %}
+        <!-- all main content will go here in templates -->
+    {% endblock %}
+
+  </div>
+
+</body>
+</html>
+
+
