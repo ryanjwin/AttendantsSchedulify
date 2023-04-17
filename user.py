@@ -39,15 +39,19 @@ class User():
         })
 
     @staticmethod
-    def get_user(username):
-        return users.find_one({'username': username})
+    def get_user(user_id):
+        user_res = users.find_one({'_id': user_id})
+        user = User(user_res['first_name'], user_res['last_name'], user_res['email'], password_hash=user_res['password_hash'])
+        user.set_uuid(user_res['_id'])
+        return user
     
     @staticmethod
     def check_password(email, password):
-        user_res = User.get_user(email)
-        if check_password_hash(user_res.password_hash, password):
-            user = User(user_res.email, password_hash=user_res.password_hash)
-            user.set_uuid(user_res._id)
+        user_res = users.find_one({'username': email})
+        
+        if check_password_hash(user_res['password_hash'], password):
+            user = User(user_res['first_name'], user_res['last_name'], user_res['email'], password_hash=user_res['password_hash'])
+            user.set_uuid(user_res['_id'])
             user.authenticated = True
             return user
         return None

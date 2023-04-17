@@ -4,7 +4,7 @@
 from flask import Flask
 from flask import render_template
 from flask_pymongo import PyMongo
-from flask_login import LoginManager, login_user, login_required, logout_user
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from user import User
 import secrets
 from flask import request, redirect, url_for
@@ -32,6 +32,19 @@ def load_user(user_id):
 def index():
     return render_template('login.html')
 
+@app.route('/authenticate', methods=['GET', 'POST'])
+def authenticate():
+    if request.method == 'GET':
+        return redirect(url_for('index'))
+    email = request.form['email']
+    password = request.form['password']
+    user = User.check_password(email, password)
+    if user:
+        login_user(user)
+        return redirect(url_for('select'))
+    return redirect(url_for('index'))
+
+
 @app.route('/create-account')
 def create_account():
     return render_template('create_account.html')
@@ -52,13 +65,18 @@ def create_user():
 
     return redirect(url_for('select'))
 
+@app.route('/logout', methods=['POST'])
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
 
 @app.route('/home')
 @login_required
 def home():
-    return render_template('home.html')
+    return render_template('home.html', user=current_user)
 
 @app.route('/select')
 @login_required
 def select():
-    return render_template('select.html')
+    return render_template('select.html', user=current_user)
