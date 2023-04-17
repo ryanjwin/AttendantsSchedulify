@@ -58,6 +58,10 @@ def create_user():
     email = request.form['email']
     password = request.form['password']
 
+    check_user = db['users'].find_one({'username': email})
+    if check_user:
+        return redirect(url_for('index'))
+
     new_user = User(first, last, email, password=password)
     new_user.save()
     new_user.authenticated = True

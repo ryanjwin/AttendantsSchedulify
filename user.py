@@ -49,7 +49,7 @@ class User():
     def check_password(email, password):
         user_res = users.find_one({'username': email})
         
-        if check_password_hash(user_res['password_hash'], password):
+        if user_res and check_password_hash(user_res['password_hash'], password):
             user = User(user_res['first_name'], user_res['last_name'], user_res['email'], password_hash=user_res['password_hash'])
             user.set_uuid(user_res['_id'])
             user.authenticated = True
